@@ -68,7 +68,6 @@ h1,h2{
   font-weight:700;
 }
 
-/* ========== تحسين عرض الجدول على الهواتف مع الحفاظ على شكله ========== */
 .table-wrapper{
   width:100%;
   overflow-x:auto;
@@ -78,7 +77,7 @@ h1,h2{
 
 table{
   width:100%;
-  min-width:650px;   /* يمنع تكسّر الجدول على الهاتف */
+  min-width:650px;
   border-collapse:collapse;
   font-size:18px;
   background:#fff;
@@ -111,6 +110,7 @@ tbody td:first-child{
   background:var(--first-col);
   color:#fff;
   font-weight:700;
+  width:120px; /* تصغير العمود الأول */
 }
 
 tbody tr.friday{
@@ -130,9 +130,11 @@ tbody tr.friday{
   h1,h2{
     font-size:22px;
   }
+  tbody td:first-child{
+    width:100px; /* تصغير أكثر على الهاتف */
+  }
 }
 
-/* ====== Header Controls ====== */
 .card-header {
   display:flex;
   justify-content:space-between;
@@ -177,7 +179,6 @@ tbody tr.friday{
   box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
 
-/* الطباعة */
 @media print {
   body * { visibility: hidden; }
   #mainTable, #mainTable * { visibility: visible; }

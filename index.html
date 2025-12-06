@@ -87,7 +87,7 @@ table{
 }
 
 thead th{
-  background:var(--header-col);
+  background:#49876d; /* اللون الأخضر كما في الصورة */
   color:#fff;
   text-align:center;
   padding:14px;
@@ -244,11 +244,10 @@ const db = firebase.database();
 
 const tbody = document.querySelector("#mainTable tbody");
 
-// إنشاء صفوف الجدول
 function createRow(index){
   const tr = document.createElement("tr");
 
-  const startDate = new Date(2026,1,18); // بداية رمضان
+  const startDate = new Date(2026,1,18);
   const currentDate = new Date(startDate);
   currentDate.setDate(startDate.getDate() + (index - 1));
 
@@ -267,7 +266,7 @@ function createRow(index){
 
   // اسم الإمام
   const tdName = document.createElement("td");
-  tdName.contentEditable = "true";
+  tdName.contentEditable = true;
   tdName.dataset.row = index;
   tdName.dataset.col = 2;
   tdName.textContent = loadCell(index,2) || "";
@@ -276,7 +275,7 @@ function createRow(index){
 
   // رقم التواصل
   const tdContact = document.createElement("td");
-  tdContact.contentEditable = "true";
+  tdContact.contentEditable = true;
   tdContact.dataset.row = index;
   tdContact.dataset.col = 3;
   tdContact.textContent = loadCell(index,3) || "";
@@ -322,7 +321,7 @@ function loadAllData(){
 }
 loadAllData();
 
-// زر الطباعة
+// الطباعة
 document.getElementById("printBtn").addEventListener("click",()=>window.print());
 
 // زر الحفظ

@@ -13,7 +13,6 @@
   --card:#ffffff;
   --accent:#34624f;
   --gold:#d4af37;
-  --muted:#6b705c;
   --friday:#cfe3d6;
   --header-col:#49876d;
   --first-col:#49876d;
@@ -87,7 +86,7 @@ table{
 }
 
 thead th{
-  background:#49876d; /* اللون الأخضر كما في الصورة */
+  background:#49876d; /* اللون الأخضر */
   color:#fff;
   text-align:center;
   padding:14px;
@@ -228,87 +227,82 @@ tbody tr.friday{
 </div>
 
 <script>
-// إعداد Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyC54cdPVh730M-AC8MFpoU8YuXckzoQcvY",
-  authDomain: "taraweehprayer1447.firebaseapp.com",
-  databaseURL: "https://taraweehprayer1447-default-rtdb.firebaseio.com",
-  projectId: "taraweehprayer1447",
-  storageBucket: "taraweehprayer1447.firebasestorage.app",
-  messagingSenderId: "1007291606404",
-  appId: "1:1007291606404:web:4acc20e78f9485ee8669d1",
-  measurementId: "G-WP7PW0LFG6"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+window.onload = function() {
+  // Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyC54cdPVh730M-AC8MFpoU8YuXckzoQcvY",
+    authDomain: "taraweehprayer1447.firebaseapp.com",
+    databaseURL: "https://taraweehprayer1447-default-rtdb.firebaseio.com",
+    projectId: "taraweehprayer1447",
+    storageBucket: "taraweehprayer1447.firebasestorage.app",
+    messagingSenderId: "1007291606404",
+    appId: "1:1007291606404:web:4acc20e78f9485ee8669d1",
+    measurementId: "G-WP7PW0LFG6"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-const tbody = document.querySelector("#mainTable tbody");
+  const tbody = document.querySelector("#mainTable tbody");
 
-function createRow(index){
-  const tr = document.createElement("tr");
+  function createRow(index){
+    const tr = document.createElement("tr");
 
-  const startDate = new Date(2026,1,18);
-  const currentDate = new Date(startDate);
-  currentDate.setDate(startDate.getDate() + (index - 1));
+    const startDate = new Date(2026,1,18);
+    const currentDate = new Date(startDate);
+    currentDate.setDate(startDate.getDate() + (index - 1));
 
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1;
-  const year = currentDate.getFullYear();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
 
-  const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-  const weekdayName = weekdays[currentDate.getDay()];
-  if(weekdayName === "الجمعة") tr.classList.add("friday");
+    const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+    const weekdayName = weekdays[currentDate.getDay()];
+    if(weekdayName === "الجمعة") tr.classList.add("friday");
 
-  // التاريخ ثابت
-  const tdDate = document.createElement("td");
-  tdDate.textContent = `${day}/${month}/${year} - ${weekdayName} - رمضان ${index}`;
-  tr.appendChild(tdDate);
+    // التاريخ ثابت
+    const tdDate = document.createElement("td");
+    tdDate.textContent = `${day}/${month}/${year} - ${weekdayName} - رمضان ${index}`;
+    tr.appendChild(tdDate);
 
-  // اسم الإمام
-  const tdName = document.createElement("td");
-  tdName.contentEditable = true;
-  tdName.dataset.row = index;
-  tdName.dataset.col = 2;
-  tdName.textContent = loadCell(index,2) || "";
-  tdName.addEventListener("input", () => saveCell(index,2,tdName.textContent));
-  tr.appendChild(tdName);
+    // اسم الإمام
+    const tdName = document.createElement("td");
+    tdName.contentEditable = true;
+    tdName.dataset.row = index;
+    tdName.dataset.col = 2;
+    tdName.textContent = localStorage.getItem(`cell_${index}_2`) || "";
+    tdName.addEventListener("input", () => saveCell(index,2,tdName.textContent));
+    tr.appendChild(tdName);
 
-  // رقم التواصل
-  const tdContact = document.createElement("td");
-  tdContact.contentEditable = true;
-  tdContact.dataset.row = index;
-  tdContact.dataset.col = 3;
-  tdContact.textContent = loadCell(index,3) || "";
-  tdContact.addEventListener("input", () => saveCell(index,3,tdContact.textContent));
-  tr.appendChild(tdContact);
+    // رقم التواصل
+    const tdContact = document.createElement("td");
+    tdContact.contentEditable = true;
+    tdContact.dataset.row = index;
+    tdContact.dataset.col = 3;
+    tdContact.textContent = localStorage.getItem(`cell_${index}_3`) || "";
+    tdContact.addEventListener("input", () => saveCell(index,3,tdContact.textContent));
+    tr.appendChild(tdContact);
 
-  return tr;
-}
+    return tr;
+  }
 
-// تعبئة الجدول
-function populateInitialRows(n=30){
-  tbody.innerHTML = "";
-  for(let i=1; i<=n; i++) tbody.appendChild(createRow(i));
-}
-populateInitialRows();
+  function populateInitialRows(n=30){
+    tbody.innerHTML = "";
+    for(let i=1; i<=n; i++){
+      tbody.appendChild(createRow(i));
+    }
+  }
 
-// حفظ البيانات
-function saveCell(row,col,value){
-  localStorage.setItem(`cell_${row}_${col}`, value);
-  db.ref(`tarawih/cell_${row}_${col}`).set(value)
-    .then(()=>console.log(`تم حفظ الخلية ${row}-${col} في Firebase ✅`))
-    .catch(err=>console.error(err));
-}
+  populateInitialRows();
 
-// تحميل البيانات
-function loadCell(row,col){
-  const localValue = localStorage.getItem(`cell_${row}_${col}`);
-  return localValue || "";
-}
+  function saveCell(row,col,value){
+    localStorage.setItem(`cell_${row}_${col}`, value);
+    db.ref(`tarawih/cell_${row}_${col}`).set(value)
+      .then(()=>console.log(`تم حفظ الخلية ${row}-${col} في Firebase ✅`))
+      .catch(err=>console.error(err));
+  }
 
-// تحميل كل البيانات من Firebase بعد إنشاء الجدول
-function loadAllData(){
-  db.ref('tarawih').get().then(snapshot => {
+  // تحميل البيانات من Firebase
+  db.ref('tarawih').get().then(snapshot=>{
     if(snapshot.exists()){
       const data = snapshot.val();
       for(const key in data){
@@ -318,24 +312,23 @@ function loadAllData(){
       }
     }
   }).catch(err => console.error(err));
-}
-loadAllData();
 
-// الطباعة
-document.getElementById("printBtn").addEventListener("click",()=>window.print());
-
-// زر الحفظ
-document.getElementById("saveBtn").addEventListener("click",()=>{
-  const cells=document.querySelectorAll("#mainTable td[contenteditable='true']");
-  cells.forEach(td=>{
-    const row=td.dataset.row;
-    const col=td.dataset.col;
-    if(row && col) saveCell(row,col,td.textContent);
+  // زر الحفظ
+  document.getElementById("saveBtn").addEventListener("click", ()=>{
+    const cells = document.querySelectorAll("#mainTable td[contenteditable='true']");
+    cells.forEach(td=>{
+      const row=td.dataset.row;
+      const col=td.dataset.col;
+      if(row && col) saveCell(row,col,td.textContent);
+    });
+    const msg = document.getElementById("saveMessage");
+    msg.style.display="inline";
+    setTimeout(()=>{ msg.style.display="none"; },2000);
   });
-  const msg=document.getElementById("saveMessage");
-  msg.style.display="inline";
-  setTimeout(()=>{ msg.style.display="none"; },2000);
-});
+
+  // الطباعة
+  document.getElementById("printBtn").addEventListener("click", ()=>window.print());
+};
 </script>
 </body>
 </html>

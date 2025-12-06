@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>جدول صلاة التراويح - جامع الإمام الربيع بن حبيب</title>
+<title>جدول محاضرات رمضان</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
@@ -13,13 +13,22 @@
   --card:#ffffff;
   --accent:#34624f;
   --gold:#d4af37;
+  --muted:#6b705c;
   --friday:#cfe3d6;
   --header-col:#49876d;
   --first-col:#49876d;
 }
+table td, table th {
+    border: 1px solid #bdbdbd !important;
+}
+td, th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 
 html, body{
   margin:0;
+  padding:1rem;
   font-family:'Amiri', serif;
   background:var(--bg) url('https://www.toptal.com/designers/subtlepatterns/uploads/moroccan-flower.png') repeat;
   background-size:300px;
@@ -27,9 +36,7 @@ html, body{
 }
 
 .container{
-  max-width:1000px;
-  margin:20px auto;
-  padding:15px;
+  max-width:1000px; margin:20px auto; padding:15px;
 }
 
 .card{
@@ -42,63 +49,41 @@ html, body{
 }
 
 .card:before{
-  content:"";
-  position:absolute;
-  top:-10px;left:-10px;right:-10px;bottom:-10px;
-  border:3px solid var(--gold);
-  border-radius:20px;
-  pointer-events:none;
+  content:""; position:absolute; top:-10px;left:-10px;right:-10px;bottom:-10px;
+  border:3px solid var(--gold); border-radius:20px; pointer-events:none;
 }
 
 h1::before{
-  content:"";
-  display:block;
-  width:140px;
-  height:160px;
-  margin:0 auto 10px auto;
+  content:""; display:block; width:140px; height:160px; margin:0 auto 10px auto;
   background:url('./img.png') center/contain no-repeat;
 }
 
 h1,h2{
-  font-size:26px;
-  text-align:center;
-  margin-bottom:15px;
-  color:var(--accent);
-  font-weight:700;
+  font-size:26px; text-align:center; margin-bottom:15px;
+  color:var(--accent); font-weight:700;
 }
 
 .table-wrapper{
-  width:100%;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  margin-top:10px;
+  width:100%; overflow-x:auto; margin-top:10px;
 }
 
 table{
-  width:100%;
-  min-width:650px;
-  border-collapse:collapse;
-  font-size:18px;
-  background:#fff;
-  border-radius:12px;
-  overflow:hidden;
-  border:2px solid #a9a9a9;
+  width:100%; min-width:650px; border-collapse:collapse;
+  font-size:18px; margin-top:1rem;
+  background:#fff; border-radius:12px;
+  overflow:hidden; border:2px solid #a9a9a9;
 }
 
 thead th{
-  background:#49876d;
-  color:#fff;
-  text-align:center;
-  padding:14px;
-  font-size:18px;
-  border:1px solid #a9a9a9;
+  background:var(--header-col); color:#fff; text-align:center;
+  padding:0.5rem; font-size:18px; border:1px solid #a9a9a9;
 }
 
-tbody td{
-  padding:14px;
-  text-align:center;
-  border:1px solid #a9a9a9;
-  font-size:17px;
+td[contenteditable="true"] {
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
 tbody tr:nth-child(odd){ background: rgba(245,245,245,0.7); }
@@ -106,133 +91,89 @@ tbody tr:nth-child(even){ background:#ffffff; }
 tbody tr:hover{ background:#e0f0e8; }
 
 tbody td:first-child{
-  background:var(--first-col);
-  color:#fff;
-  font-weight:700;
-  width:120px;
+  background:var(--first-col); color:#fff; font-weight:700; width:120px;
 }
 
-tbody tr.friday{
-  background-color:var(--friday) !important;
-}
+tbody tr.friday{ background-color:var(--friday) !important; }
 
-@media (max-width:600px){
-  table{
-    font-size:15px;
-    min-width:600px;
-  }
-  thead th, tbody td{
-    padding:10px;
-    font-size:15px;
-  }
-  h1,h2{
-    font-size:22px;
-  }
-  tbody td:first-child{
-    width:100px;
-  }
-}
-
-.card-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
+.card-header{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
   padding:12px 10px;
 }
 
-#saveBtn, #printBtn {
-  padding:10px 16px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:bold;
-  color:#fff;
-  font-size:15px;
-  border:none;
-  transition:0.2s;
+#saveBtn,#printBtn{
+  padding:10px 16px; border-radius:12px; cursor:pointer;
+  font-weight:bold; color:#fff; font-size:15px;
+  border:none; transition:0.2s;
 }
 
-#saveBtn { background: var(--gold); }
-#saveBtn:hover { background: #c49b2c; }
+#saveBtn{ background:var(--gold); }
+#saveBtn:hover{ background:#c49b2c; }
 
-#printBtn { background: var(--accent); margin-left:10px; }
-#printBtn:hover { background:#397155; }
+#printBtn{ background:var(--accent); margin-left:10px; }
+#printBtn:hover{ background:#397155; }
 
 #saveMessage{
-  color:green;
-  font-weight:bold;
-  display:none;
-  margin-right:8px;
+  color:green; font-weight:bold; display:none; margin-right:8px;
 }
 
 .contact-box{
-  background:var(--card);
-  padding:8px 15px;
-  border:2px solid var(--gold);
-  border-radius:12px;
-  text-align:center;
-  color:var(--accent);
-  font-size:15px;
-  line-height:1.6;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  background:var(--card); padding:8px 15px;
+  border:2px solid var(--gold); border-radius:12px;
+  text-align:center; color:var(--accent);
+  font-size:15px; line-height:1.6;
 }
 
-@media print {
-  body * { visibility: hidden; }
-  #mainTable, #mainTable * { visibility: visible; }
-  #mainTable { position:absolute; top:0; left:0; width:100%; }
+@media print{
+  body *{ visibility:hidden; }
+  #mainTable,#mainTable *{ visibility:visible; }
+  #mainTable{ position:absolute; top:0; left:0; width:100%; }
 }
 </style>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.16.0/firebase-database-compat.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
+
 <div class="container">
-  <div class="card">
+<div class="card">
+<div class="card-header">
+<div style="display:flex;align-items:center;">
+<button id="saveBtn">💾 حفظ</button>
+<span id="saveMessage">تم الحفظ بنجاح ✅</span>
+<button id="printBtn">🖨️ طباعة</button>
+</div>
 
-    <div class="card-header">
-      <div style="display:flex;align-items:center;">
-        <button id="saveBtn">💾 حفظ</button>
-        <span id="saveMessage">تم الحفظ بنجاح ✅</span>
-        <button id="printBtn">🖨️ طباعة</button>
-      </div>
+<div class="contact-box">
+<strong>إدارة الجامع:</strong><br>
+فيصل المبسلي: 98036047<br>
+داوود المبسلي: 95522897
+</div>
+</div>
 
-      <div class="contact-box">
-        <strong> إدارة الجامع:</strong><br/>
-        فيصل المبسلي: 98036047<br/>
-        داوود المبسلي: 95522897
-      </div>
-    </div>
+<h1>جدول محاضرات رمضان 1447 - جامع الإمام الربيع بن حبيب</h1>
+<h2>السيب - وادي اللوامي</h2>
 
-    <h1>جدول صلاة التراويح - جامع الإمام الربيع بن حبيب</h1>
-    <h2>السيب - وادي اللوامي</h2>
+<div class="table-wrapper">
+<table id="mainTable">
+<thead>
+<tr>
+  <th>التاريخ</th>
+  <th>اسم المحاضر</th>
+  <th>رقم التواصل</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
 
-    <div class="table-wrapper">
-      <table id="mainTable">
-        <thead>
-          <tr>
-            <th>التاريخ</th>
-            <th>اسم الإمام</th>
-            <th>رقم التواصل</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-  </div>
+</div>
 </div>
 
 <script>
-const TOTAL_DAYS=30;
-const START_DATE=new Date(2026,1,18); // فبراير يبدأ من 1
-const weekdays=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-const tbody=document.querySelector("#mainTable tbody");
-
-// Firebase
+/* إعدادات Firebase */
+// إعداد Firebase الجديد
 const firebaseConfig = {
   apiKey: "AIzaSyC54cdPVh730M-AC8MFpoU8YuXckzoQcvY",
   authDomain: "taraweehprayer1447.firebaseapp.com",
@@ -240,98 +181,112 @@ const firebaseConfig = {
   projectId: "taraweehprayer1447",
   storageBucket: "taraweehprayer1447.firebasestorage.app",
   messagingSenderId: "1007291606404",
-  appId: "1:1007291606404:web:4acc20e78f9485ee8669d1"
+  appId: "1:1007291606404:web:4acc20e78f9485ee8669d1",
+  measurementId: "G-WP7PW0LFG6"
 };
+
 firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
+const db = firebase.database();
 
-// ضبط اتجاه النص
-function setDirection(cell){
-    const arabicRegex=/[\u0600-\u06FF]/;
-    const content=cell.textContent.trim();
-    if(arabicRegex.test(content)){ cell.style.direction="rtl"; cell.style.textAlign="right"; }
-    else { cell.style.direction="ltr"; cell.style.textAlign="left"; }
+const TOTAL_DAYS = 30;
+const START_DATE = new Date(2026,1,18);
+const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const tbody = document.querySelector("#mainTable tbody");
+
+for(let i=1;i<=TOTAL_DAYS;i++){
+  const tr = document.createElement("tr");
+  const date = new Date(START_DATE);
+  date.setDate(START_DATE.getDate()+(i-1));
+  const weekdayName = weekdays[date.getDay()];
+
+  if(weekdayName === "الجمعة") tr.classList.add("friday");
+
+  // التاريخ
+  const tdDate = document.createElement("td");
+  tdDate.contentEditable = true;
+  tdDate.textContent = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} - ${weekdayName} - رمضان ${i}`;
+  tr.appendChild(tdDate);
+
+  // اسم المحاضر
+  const tdName = document.createElement("td");
+  tdName.contentEditable = true;
+  tr.appendChild(tdName);
+
+  // رقم التواصل
+  const tdPhone = document.createElement("td");
+  tdPhone.contentEditable = true;
+  tr.appendChild(tdPhone);
+
+  tbody.appendChild(tr);
 }
 
-// إنشاء صف جديد
-function createRow(index){
-    const tr=document.createElement("tr");
-    const date=new Date(START_DATE);
-    date.setDate(date.getDate()+(index-1));
-    const weekdayName=weekdays[date.getDay()];
-    if(weekdayName==="الجمعة") tr.classList.add("friday");
-
-    // التاريخ
-    const tdDate=document.createElement("td");
-    tdDate.textContent=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} - ${weekdayName} - رمضان ${index}`;
-    setDirection(tdDate);
-    tr.appendChild(tdDate);
-
-    // اسم الإمام
-    const tdName=document.createElement("td");
-    tdName.contentEditable=true;
-    tdName.dataset.row=index;
-    tdName.dataset.col=2;
-    tdName.textContent=localStorage.getItem(`cell_${index}_2`)||"";
-    tdName.addEventListener("input",()=>saveCell(index,2,tdName.textContent));
-    setDirection(tdName);
-    tr.appendChild(tdName);
-
-    // رقم التواصل
-    const tdContact=document.createElement("td");
-    tdContact.contentEditable=true;
-    tdContact.dataset.row=index;
-    tdContact.dataset.col=3;
-    tdContact.textContent=localStorage.getItem(`cell_${index}_3`)||"";
-    tdContact.addEventListener("input",()=>saveCell(index,3,tdContact.textContent));
-    setDirection(tdContact);
-    tr.appendChild(tdContact);
-
-    return tr;
+// 🔥 إصلاح مشكلة النصوص على iPhone
+function placeCaretAtEnd(el){
+  const range=document.createRange();
+  const sel=window.getSelection();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
-// تعبئة الجدول عند التحميل
-function populateTable(){
-    tbody.innerHTML="";
-    for(let i=1;i<=TOTAL_DAYS;i++){
-        tbody.appendChild(createRow(i));
+document.addEventListener("focusin", function(e){
+  if(e.target.matches('td[contenteditable="true"]')){
+    e.target.setAttribute("dir","rtl");
+    e.target.setAttribute("lang","ar");
+
+    let val=e.target.textContent.trim();
+    if(!val || !/[\u0600-\u06FF]/.test(val[0])){
+      if(!e.target.textContent.startsWith("\u200F")){
+        e.target.textContent="\u200F"+e.target.textContent;
+        placeCaretAtEnd(e.target);
+      }
     }
-}
-populateTable();
-
-// حفظ البيانات في LocalStorage و Firebase
-function saveCell(row,col,value){
-    localStorage.setItem(`cell_${row}_${col}`, value);
-    db.ref(`tarawih/cell_${row}_${col}`).set(value)
-      .then(()=>console.log(`تم حفظ الخلية ${row}-${col} ✅`))
-      .catch(err=>console.error(err));
-}
-
-// زر الحفظ
-document.getElementById("saveBtn").addEventListener("click",()=>{
-    document.querySelectorAll("#mainTable td[contenteditable='true']").forEach(td=>{
-        const row=td.dataset.row, col=td.dataset.col;
-        if(row && col) saveCell(row,col,td.textContent);
-    });
-    const msg=document.getElementById("saveMessage");
-    msg.style.display="inline";
-    setTimeout(()=>{ msg.style.display="none"; },2000);
+  }
 });
 
-// تحميل البيانات من Firebase عند التحميل
-db.ref('tarawih').get().then(snapshot=>{
-    if(snapshot.exists()){
-        const data=snapshot.val();
-        for(const key in data){
-            const [_, row, col] = key.split('_');
-            const td=document.querySelector(`td[data-row='${row}'][data-col='${col}']`);
-            if(td) td.textContent=data[key];
-        }
+document.addEventListener("input", function(e){
+  if(e.target.matches('td[contenteditable="true"]')){
+    if(!e.target.textContent.startsWith("\u200F")){
+      e.target.textContent="\u200F"+e.target.textContent;
+      placeCaretAtEnd(e.target);
     }
-}).catch(err=>console.error(err));
+  }
+});
 
-// الطباعة
-document.getElementById("printBtn").addEventListener("click",()=>window.print());
+// تنظيف RLM قبل الحفظ
+function clean(v){
+  return v ? v.replace(/^\u200F/,"").trim() : "";
+}
+
+// حفظ البيانات
+tbody.addEventListener("input", ()=>{
+  const rows = [...tbody.querySelectorAll("tr")].map(tr=>{
+    const tds = tr.querySelectorAll("td");
+    return {
+      date: clean(tds[0].textContent),
+      lecturer: clean(tds[1].textContent),
+      contact: clean(tds[2].textContent)
+    };
+  });
+  db.ref("ramadan_lectures").set(rows);
+  saveMessage.style.display="inline";
+  setTimeout(()=>saveMessage.style.display="none",1500);
+});
+
+// تحميل البيانات
+db.ref("ramadan_lectures").on("value", snap=>{
+  const data = snap.val();
+  if(!data) return;
+  tbody.querySelectorAll("tr").forEach((tr,i)=>{
+    if(!data[i]) return;
+    const tds = tr.querySelectorAll("td");
+    tds[0].textContent = data[i].date;
+    tds[1].textContent = data[i].lecturer;
+    tds[2].textContent = data[i].contact;
+  });
+});
 </script>
+
 </body>
 </html>

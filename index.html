@@ -228,7 +228,7 @@ tbody tr.friday{
 
 <script>
 window.onload = function() {
-  // Firebase
+  // ======= إعداد Firebase =======
   const firebaseConfig = {
     apiKey: "AIzaSyC54cdPVh730M-AC8MFpoU8YuXckzoQcvY",
     authDomain: "taraweehprayer1447.firebaseapp.com",
@@ -237,32 +237,42 @@ window.onload = function() {
     storageBucket: "taraweehprayer1447.firebasestorage.app",
     messagingSenderId: "1007291606404",
     appId: "1:1007291606404:web:4acc20e78f9485ee8669d1",
-    measurementId: "G-WP7PW0LFG6"
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
+  // ======= إعداد المتغيرات =======
   const tbody = document.querySelector("#mainTable tbody");
+  const TOTAL_DAYS = 30; // عدد أيام رمضان
+  const START_DATE = new Date(2026,1,18); // بداية رمضان
+  const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
 
+  function setDirection(td){
+    td.style.direction = /^[0-9+\-().]+$/.test(td.textContent) ? "ltr" : "rtl";
+  }
+
+  // ======= إنشاء صفوف الجدول =======
   function createRow(index){
     const tr = document.createElement("tr");
+    const date = new Date(START_DATE);
+    date.setDate(START_DATE.getDate() + (index-1));
+    const weekdayName = weekdays[date.getDay()];
+    if(weekdayName==="الجمعة") tr.classList.add("friday");
 
-    const startDate = new Date(2026,1,18);
-    const currentDate = new Date(startDate);
-    currentDate.setDate(startDate.getDate() + (index - 1));
-
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-
-    const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
-    const weekdayName = weekdays[currentDate.getDay()];
-    if(weekdayName === "الجمعة") tr.classList.add("friday");
-
-    // التاريخ ثابت
+    // التاريخ
     const tdDate = document.createElement("td");
-    tdDate.textContent = `${day}/${month}/${year} - ${weekdayName} - رمضان ${index}`;
+    tdDate.textContent = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} - ${weekdayName} - رمضان ${index}`;
     tr.appendChild(tdDate);
+
+    // وقت الصلاة
+    const tdTime = document.createElement("td");
+    const selectTime = document.createElement("select");
+    const options = weekdayName==="الجمعة"
+      ? ["بعد صلاة الجمعة","بعد صلاة العصر","بعد صلاة المغرب","بعد صلاة العشاء"]
+      : ["بعد صلاة الظهر","بعد صلاة العصر","بعد صلاة المغرب","بعد صلاة العشاء"];
+    options.forEach(opt=>{ const o=document.createElement("option"); o.value=opt; o.textContent=opt; selectTime.appendChild(o); });
+    tdTime.appendChild(selectTime);
+    tr.appendChild(tdTime);
 
     // اسم الإمام
     const tdName = document.createElement("td");
@@ -270,7 +280,8 @@ window.onload = function() {
     tdName.dataset.row = index;
     tdName.dataset.col = 2;
     tdName.textContent = localStorage.getItem(`cell_${index}_2`) || "";
-    tdName.addEventListener("input", () => saveCell(index,2,tdName.textContent));
+    tdName.addEventListener("input",()=>saveCell(index,2,tdName.textContent));
+    setDirection(tdName);
     tr.appendChild(tdName);
 
     // رقم التواصل
@@ -279,21 +290,23 @@ window.onload = function() {
     tdContact.dataset.row = index;
     tdContact.dataset.col = 3;
     tdContact.textContent = localStorage.getItem(`cell_${index}_3`) || "";
-    tdContact.addEventListener("input", () => saveCell(index,3,tdContact.textContent));
+    tdContact.addEventListener("input",()=>saveCell(index,3,tdContact.textContent));
+    setDirection(tdContact);
     tr.appendChild(tdContact);
 
     return tr;
   }
 
-  function populateInitialRows(n=30){
+  function populateTable(){
     tbody.innerHTML = "";
-    for(let i=1; i<=n; i++){
+    for(let i=1;i<=TOTAL_DAYS;i++){
       tbody.appendChild(createRow(i));
     }
   }
 
-  populateInitialRows();
+  populateTable();
 
+  // ======= حفظ البيانات =======
   function saveCell(row,col,value){
     localStorage.setItem(`cell_${row}_${col}`, value);
     db.ref(`tarawih/cell_${row}_${col}`).set(value)
@@ -301,7 +314,17 @@ window.onload = function() {
       .catch(err=>console.error(err));
   }
 
-  // تحميل البيانات من Firebase
+  document.getElementById("saveBtn").addEventListener("click",()=>{
+    document.querySelectorAll("#mainTable td[contenteditable='true']").forEach(td=>{
+      const row=td.dataset.row, col=td.dataset.col;
+      if(row && col) saveCell(row,col,td.textContent);
+    });
+    const msg=document.getElementById("saveMessage");
+    msg.style.display="inline";
+    setTimeout(()=>{ msg.style.display="none"; },2000);
+  });
+
+  // ======= تحميل البيانات من Firebase =======
   db.ref('tarawih').get().then(snapshot=>{
     if(snapshot.exists()){
       const data = snapshot.val();
@@ -313,22 +336,11 @@ window.onload = function() {
     }
   }).catch(err => console.error(err));
 
-  // زر الحفظ
-  document.getElementById("saveBtn").addEventListener("click", ()=>{
-    const cells = document.querySelectorAll("#mainTable td[contenteditable='true']");
-    cells.forEach(td=>{
-      const row=td.dataset.row;
-      const col=td.dataset.col;
-      if(row && col) saveCell(row,col,td.textContent);
-    });
-    const msg = document.getElementById("saveMessage");
-    msg.style.display="inline";
-    setTimeout(()=>{ msg.style.display="none"; },2000);
-  });
-
-  // الطباعة
-  document.getElementById("printBtn").addEventListener("click", ()=>window.print());
+  // ======= طباعة =======
+  document.getElementById("printBtn").addEventListener("click",()=>window.print());
 };
 </script>
+
 </body>
 </html>
+

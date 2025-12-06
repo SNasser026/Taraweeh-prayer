@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>جدول محاضرات رمضان</title>
+<title>جدول صلاة التراويح - جامع الإمام الربيع بن حبيب</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
@@ -152,16 +152,16 @@ tbody tr.friday{ background-color:var(--friday) !important; }
 </div>
 </div>
 
-<h1>جدول محاضرات رمضان 1447 - جامع الإمام الربيع بن حبيب</h1>
-<h2>السيب - وادي اللوامي</h2>
-
+ <h1>جدول صلاة التراويح - جامع الإمام الربيع بن حبيب</h1>
+    <h2>السيب - وادي اللوامي</h2>
+  
 <div class="table-wrapper">
 <table id="mainTable">
 <thead>
 <tr>
-  <th>التاريخ</th>
-  <th>اسم المحاضر</th>
-  <th>رقم التواصل</th>
+ <th>التاريخ</th>
+            <th>اسم الإمام</th>
+            <th>رقم التواصل</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -207,7 +207,7 @@ for(let i=1;i<=TOTAL_DAYS;i++){
   tdDate.textContent = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} - ${weekdayName} - رمضان ${i}`;
   tr.appendChild(tdDate);
 
-  // اسم المحاضر
+  // اسم الإمام
   const tdName = document.createElement("td");
   tdName.contentEditable = true;
   tr.appendChild(tdName);
@@ -290,3 +290,4 @@ db.ref("ramadan_lectures").on("value", snap=>{
 
 </body>
 </html>
+

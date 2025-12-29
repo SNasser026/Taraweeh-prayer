@@ -189,7 +189,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const TOTAL_DAYS = 30;
-const START_DATE = new Date(2026,1,18);
+const START_DATE = new Date(2026,1,19);
 const weekdays = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
 const tbody = document.querySelector("#mainTable tbody");
 
@@ -290,4 +290,5 @@ db.ref("ramadan_lectures").on("value", snap=>{
 
 </body>
 </html>
+
 
